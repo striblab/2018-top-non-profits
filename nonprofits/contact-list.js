@@ -5,7 +5,6 @@
 // Dependencies
 const queryString = require('query-string');
 const _ = require('lodash');
-const GoogleURL = require('google-url');
 const parseName = require('parse-full-name').parseFullName;
 let { getData } = require('../lib/gulp-html.js');
 
