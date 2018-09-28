@@ -10,11 +10,19 @@ Data is manaually managed by Star Tribune through the Data Drop database, and sp
 - `DATA_UI_USERNAME`
 - `DATA_UI_API_KEY`
 
+## Contact list and survey
+
 In order to create the contact list and other parts, we also need to some other variables around the survey form:
 
 - `SURVEY_URL` Should be something like `https://docs.google.com/forms/d/e/XXXXXXX/`
 - `SURVEY_PASS` Defined in the survey
 - `BITLY_SHORTENER_API_KEY` Once you create a Bit.ly account, you can get a "Generic Access Token"
+
+To create the contact list, run the following:
+
+```
+node nonprofits/contact-list.js
+```
 
 ## Publishing
 
