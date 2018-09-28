@@ -4,11 +4,17 @@
 
 ## Data
 
-Data is manaually managed by Star Tribune through the Data Drop database, and specifically through the Data UI interface. To use this API, set the following environment variable, optionally in a `.env` file:
+Data is manaually managed by Star Tribune through the Data Drop database, and specifically through the Data UI interface. To use this API for building the project, set the following environment variable, optionally in a `.env` file:
 
 - `DATA_UI_URI` (should NOT include trailing slash)
 - `DATA_UI_USERNAME`
 - `DATA_UI_API_KEY`
+
+In order to create the contact list and other parts, we also need to some other variables around the survey form:
+
+- `SURVEY_URL` Should be something like `https://docs.google.com/forms/d/e/XXXXXXX/`
+- `SURVEY_PASS` Defined in the survey
+- `BITLY_SHORTENER_API_KEY` Once you create a Bit.ly account, you can get a "Generic Access Token"
 
 ## Publishing
 

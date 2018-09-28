@@ -29,7 +29,7 @@ module.exports = {
   contactList: {
     source: `${
       process.env.DATA_UI_URI
-    }/api/v01/company/?companytype__iregex=charity|foundation|nonprofit|trust&contactemail__iregex=@&state=MN&username=${
+    }/api/v01/company/?companytype__iregex=charity|foundation|nonprofit|trust&contactemail__iregex=@&state=MN&limit=1000&username=${
       process.env.DATA_UI_USERNAME
     }&api_key=${process.env.DATA_UI_API_KEY}`,
     postprocess: parseContactList,
