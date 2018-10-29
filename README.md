@@ -24,6 +24,24 @@ To create the contact list, run the following:
 node nonprofits/contact-list.js
 ```
 
+Any mail program can work, but so far this has been done with MailChimp.
+
+1. Create a new list using the exported CSV, importing the fields.
+1. Create a campaign that uses the fields, specifically the survey URL.
+
+### Follow-up list
+
+We base the follow up list on who has responded to the survey.
+
+1. Export the CSV from the respondent list and save it in `nonprofits/build/` folder (or somehwere that won't get committed to the repo).
+1. Re-run the contact list script, passing along where that file is:
+   - `node nonprofits/contact-list.js --exclude="nonprofits/build/XXXX.csv"`
+   - This will export a new contact list
+   - This will also show a copyable list of emails
+1. In MailChimp replicate the campaign
+   - In MailChimp, you can send to a group of a list by pasting emails, this is the easier way to create a new list to send to.
+   - Update campaign email and wording where needed
+
 ## Publishing
 
 See [docs/publishing.md](./docs/publishing.md).

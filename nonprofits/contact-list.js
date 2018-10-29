@@ -12,6 +12,7 @@ const { format } = require('date-fns');
 const csv = require('d3-dsv').dsvFormat(',');
 let { getData } = require('../lib/gulp-html.js');
 let shorten = require('../lib/url-shorten.js');
+const argv = require('yargs').argv;
 
 // Output
 const outputDir = path.join(__dirname, 'build');
@@ -26,11 +27,19 @@ const outputPath = path.join(
 // Main function
 async function main() {
   let sources = await getData();
+  let excludeList = readExclude();
 
   // Make sure we don't have any that are dropped
   let list = _.filter(sources.contactList, c => {
     return !c.companytype.match(/drop/i);
   });
+
+  // Exclude if needed
+  if (excludeList) {
+    list = _.filter(list, c => {
+      return excludeList.indexOf(c.coid) === -1;
+    });
+  }
 
   // Parse list
   list = _.map(list, c => {
@@ -97,10 +106,33 @@ async function main() {
     c.surveyURLShort = await shorten(c.surveyURL);
   }
 
+  // If exclude list, then output copyable list of emails
+  if (excludeList) {
+    console.error('==== START: List of emails ====');
+    console.error(_.map(list, 'email').join('\n'));
+    console.error('==== END: List of emails ====');
+  }
+
   // Output CSV
   fs.mkdirpSync(outputDir);
   fs.writeFileSync(outputPath, csv.format(list));
   console.error(`${list.length} contacts written to CSV at: \n${outputPath}`);
+}
+
+// REad exclude list
+function readExclude() {
+  if (!argv.exclude) {
+    return;
+  }
+
+  // Field to look for
+  let orgIdField = argv.orgIdField || 'Star Tribune ID';
+
+  // Read in file
+  let excludeList = csv.parse(fs.readFileSync(argv.exclude, 'utf-8'));
+
+  // Make list
+  return _.map(_.filter(excludeList, 'Organization Name'), orgIdField);
 }
 
 // Run main
