@@ -1,3 +1,98 @@
 /**
- * Project specific styling.
+ * General specific styling.
  */
+
+// Category colors
+$color-categories: (
+  social-services: #ebe3d3,
+  healthcare: #d5e1ec,
+  health-care: #d5e1ec,
+  arts: #edd4d4,
+  education: #dbe3ce,
+  other: #d6d6e6
+);
+
+@each $id, $color in $color-categories {
+  .category.#{$id} {
+    background-color: $color;
+
+    &:hover {
+      background-color: darken($color, 15%);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba($color, 0.5);
+    }
+  }
+
+  .category.#{$id}-fg {
+    color: darken($color, 50);
+  }
+}
+
+.nowrap-item {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+// Dealing with (probably hackish) ways to show hide on mobile
+// or desktop
+.desktop-only,
+.desktop-only-inline,
+.desktop-only-inline-block {
+  display: none !important;
+}
+
+.desktop-page & .desktop-only {
+  display: block !important;
+}
+
+.desktop-page & .desktop-only-inline {
+  display: inline !important;
+}
+
+.desktop-page & .desktop-only-inline-block {
+  display: inline-block !important;
+}
+
+.mobile-only,
+.mobile-only-inline,
+.mobile-only-inline-block {
+  display: none !important;
+}
+
+.mobile-page & .mobile-only {
+  display: block !important;
+}
+
+.mobile-page & .mobile-only-inline {
+  display: inline !important;
+}
+
+.mobile-page & .mobile-only-inline-block {
+  display: inline-block !important;
+}
+
+// Some responsive grid spacing (bottom)
+.row {
+  // Bottom space
+  .grid-space {
+    margin-bottom: $grid-padding * 2;
+  }
+
+  @each $name, $size in $breakpoints {
+    @media only screen and (min-width: #{$size}) {
+      .grid-space-#{$name} {
+        margin-bottom: $grid-padding * 2;
+      }
+    }
+  }
+
+  @each $name, $size in $breakpoints {
+    @media only screen and (min-width: #{$size}) {
+      .no-grid-space-#{$name} {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

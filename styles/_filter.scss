@@ -1,0 +1,62 @@
+/**
+ * Filtering and sorting
+ */
+
+.category-filter {
+  padding-bottom: 1em;
+  border-bottom: 3px solid map-get($grays, "medium");
+  margin-bottom: 2em;
+  text-align: center;
+
+  fieldset {
+    margin: 0 0 2em;
+    padding: 0;
+    border: 0;
+
+    @media only screen and (min-width: map-get($breakpoints, "md")) {
+      text-align: left;
+      margin: 0;
+    }
+  }
+
+  legend {
+    display: inline-block;
+    margin-bottom: 0.25em;
+    font-size: 1em;
+    margin-right: 0.85em;
+    padding-top: 0.5em;
+
+    @media only screen and (min-width: map-get($breakpoints, "md")) {
+      float: left;
+    }
+  }
+
+  button {
+    background-color: map-get($grays, "lighter");
+    color: $color-black;
+    padding: 0.5em;
+    border: 0;
+    border-radius: 0.2em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+
+    &:hover {
+      background-color: map-get($grays, "light");
+      cursor: pointer;
+    }
+
+    &.active {
+      border: 2px solid map-get($grays, "light");
+    }
+
+    &.undefined {
+      background-color: $color-white;
+    }
+  }
+
+  .ceo-sort {
+    @media only screen and (min-width: map-get($breakpoints, "md")) {
+      text-align: right;
+    }
+  }
+}

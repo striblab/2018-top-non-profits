@@ -1,0 +1,275 @@
+<div class="company">
+  <div class="company-heading row">
+    <div class="col col-25 col-md-20 grid-space">
+      <p class="rank category { kebabCase(category) }">
+        <span class="sr-only">The overall ranking of this company is</span>
+        <span>{ rank }</span>
+      </p>
+    </div>
+
+    <div class="col col-75 col-md-75 grid-space">
+      <h3>{ name }</h3>
+
+      <p>{ shortdesc }</p>
+
+      <div class="company-meta">
+        <span class="nowrap-item">
+          { category } <span class="spacer"></span>
+        </span>
+
+        <span class="nowrap-item">
+          { publishYear - 1 } ranking: <strong>{ rankPrevious ? rankPrevious : '-' }</strong>
+          {#if rankPrevious && rank > rankPrevious}
+            <span class="decrease" title="A decrease in rank from last year."></span>
+          {:elseif rankPrevious && rank < rankPrevious}
+            <span class="increase" title="An increase in rank from last year."></span>
+          {/if}
+
+          <span class="spacer"></span>
+        </span>
+
+        <span class="nowrap-item">
+          { city }
+          {#if www}
+            <span class="spacer"></span>
+          {/if}
+        </span>
+
+        {#if www}
+          <span class="nowrap-item">
+            <a href="{ linkURL }" target="_blank" rel="noopener">{ linkText }</a>
+          </span>
+        {/if}
+      </div>
+    </div>
+  </div>
+
+  <div class="company-details row">
+    <div class="col col-25 col-md-20 grid-space no-grid-space-md">
+      <div class="logo">
+        {#if hasLogo}
+          <img src="./assets/logos/{ coid }.png" alt="Company logo for { name }">
+        {:else}
+          {@html '&nbsp;'}
+        {/if}
+      </div>
+    </div>
+
+    <div class="col col-75 col-md-30 grid-space no-grid-space-md">
+      <h4 class="sr-only">Company financial details</h4>
+
+      <div class="financial-data revenue">
+        <span title="The full revenue is ${ getValue(nonprofit_finances, 'revenue', publishYear) }">
+          ${ abbreviateNumber(getValue(nonprofit_finances, 'revenue', publishYear)) }
+        </span> in revenue
+      </div>
+
+      {#if getValue(nonprofit_finances, 'revenue', publishYear - 1)}
+        <div class="financial-data revenue-change">
+          <span title="Last year's revenue was ${ abbreviateNumber(getValue(nonprofit_finances, 'revenue', publishYear - 1)) }">
+            { percent(getChange(nonprofit_finances, 'revenue', publishYear)) }%
+          </span>
+
+          {#if getChange(nonprofit_finances, 'revenue', publishYear) < 0}
+            <span class="decrease" title="A decrease in revenue from last year."></span>
+          {:elseif getChange(nonprofit_finances, 'revenue', publishYear) > 0}
+            <span class="increase" title="An increase in revenue from last year."></span>
+          {/if}
+
+          change from { publishYear - 1 }
+        </div>
+      {/if}
+
+      <div class="financial-data expenses">
+        <span>${ abbreviateNumber(getValue(nonprofit_finances, 'expenses', publishYear)) }</span> in expenses
+      </div>
+
+      <div class="financial-data excess">
+        <span>{ getValue(nonprofit_finances, 'excess', publishYear) < 0 ? '-$' : '$' }{ abbreviateNumber(getValue(nonprofit_finances, 'excess', publishYear)).replace('-', '') }</span> in excess
+      </div>
+    </div>
+
+    {#if ceo}
+      <div class="col col-25 col-md-15">
+        <div class="ceo-headshot" data-officer-id="{ ceo.id }">
+          {#if ceo.hasImage}
+            <img src="./assets/ceos/{ ceo.id }.png" alt="Headshot for { officerName }">
+          {:else}
+            <img src="./assets/images/generic-headshot.jpg" alt="Generic headshot image">
+          {/if}
+        </div>
+      </div>
+
+      <div class="col col-75 col-md-35">
+        <h4 class="sr-only">Leadership details</h4>
+
+        <div class="leadership-data leader-name">
+          <span>{ officerName(ceo) }</span><br>
+          { ceo.title }
+        </div>
+
+        <div class="leadership-data compensation { getValue(ceo.nonprofit_salaries, 'total', publishYear) ? '' : 'compensation-na'}">
+          <span>
+            {#if getValue(ceo.nonprofit_salaries, 'total', publishYear)}
+              ${ abbreviateNumber(getValue(ceo.nonprofit_salaries, 'total', publishYear)) }
+            {:else}
+              N/A
+            {/if}
+          </span>
+
+          {#if getValue(ceo.nonprofit_salaries, 'total', publishYear)}in{/if}
+          compensation
+        </div>
+
+        {#if getValue(ceo.nonprofit_salaries, 'total', publishYear) && getValue(ceo.nonprofit_salaries, 'total', publishYear - 1)}
+          <div class="leadership-data compensation-change">
+            <span>
+              { percent(getChange(ceo.nonprofit_salaries, 'total', publishYear)) }%
+            </span>
+
+            {#if getChange(ceo.nonprofit_salaries, 'total', publishYear) < 0}
+              <span class="decrease" title="A decrease in compensation from last year."></span>
+            {:elseif getChange(ceo.nonprofit_salaries, 'total', publishYear) > 0}
+              <span class="increase" title="An increase in compensation from last year."></span>
+            {/if}
+
+            change from { publishYear - 1 }
+          </div>
+        {/if}
+
+        {#if getValue(ceo.nonprofit_salaries, 'total', publishYear)}
+          <div class="leadership-data compensation-revenue-ratio">
+            <span>{ Math.round((getValue(ceo.nonprofit_salaries, 'total', publishYear) / getValue(nonprofit_finances, 'expenses', publishYear)) * 100) }%</span> of expenses
+          </div>
+        {/if}
+      </div>
+    {/if}
+  </div>
+</div>
+
+<script>
+  import { kebabCase, isNumber, find, filter } from "lodash";
+
+  export default {
+    oncreate() {
+      console.log(this.get());
+    },
+
+    helpers: {
+      kebabCase,
+
+      // Get a value from an array of data
+      getValue(set, field, year) {
+        if (!set) {
+          return;
+        }
+
+        let f = find(set, { publishyear: year });
+        if (!f) {
+          return;
+        }
+
+        return f[field];
+      },
+
+      // Get change from previous year
+      getChange(set, field, year) {
+        if (!set) {
+          return;
+        }
+
+        let current = find(set, { publishyear: year });
+        if (!current || !isNumber(current[field])) {
+          return;
+        }
+
+        let previous = find(set, { publishyear: year - 1 });
+        if (!previous || !isNumber(previous[field])) {
+          return;
+        }
+
+        return (current[field] - previous[field]) / previous[field];
+      },
+
+      percent(input) {
+        if (!isNumber(input)) {
+          return "-";
+        }
+
+        return Math.round(input * 100);
+      },
+
+      // Shorten number
+      abbreviateNumber(input, decimals = 1) {
+        if (!isNumber(input)) {
+          return input ? input : "";
+        }
+
+        // Round function
+        let round = value => {
+          return (
+            Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
+          );
+        };
+
+        // Get power
+        let b = input.toPrecision(2).split("e");
+        // Floor at decimals, ceiling at trillions
+        let k = b.length === 1 ? 0 : Math.floor(Math.min(b[1].slice(1), 14) / 3);
+        // Divide by power
+        let c = k < 1 ? round(input) : round(input / Math.pow(10, k * 3));
+        // Ensure -0 is 0
+        c = c < 0 ? c : Math.abs(c);
+        // Append abbreviation
+        return c + ["", "k", "M", "B", "T"][k];
+      },
+
+      officerName(officer) {
+        if (!officer) {
+          return;
+        }
+
+        // Don't show Mr, Mr, Ms, Mrs salut
+        return filter([
+          officer.salut && officer.salut.indexOf("M") !== 0 ? officer.salut : "",
+          officer.first,
+          officer.last,
+          officer.lineage ? `, ${officer.lineage}` : ""
+        ])
+          .join(" ")
+          .replace(/ ,/g, ",");
+      }
+    },
+
+    computed: {
+      ceo({ officers, publishYear, ceoTitleMatch }) {
+        if (!officers || !officers.length) {
+          return;
+        }
+
+        let ceos = filter(officers, o => {
+          let f = find(o.nonprofit_salaries, { publishyear: publishYear });
+          return f && o.title && o.title.match(ceoTitleMatch);
+        });
+        if (ceos.length > 1) {
+          console.error(ceos);
+        }
+
+        return ceos ? ceos[0] : undefined;
+      },
+
+      linkURL({ www }) {
+        return www && www.indexOf("http") === 0 ? www : "http://" + www;
+      },
+
+      linkText({ www }) {
+        return www
+          ? www
+              .replace(/https?:\/\//, "")
+              .replace("www.", "")
+              .replace(/\/$/, "")
+          : "";
+      }
+    }
+  };
+</script>
