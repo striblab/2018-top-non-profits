@@ -42,6 +42,14 @@ We base the follow up list on who has responded to the survey.
    - In MailChimp, you can send to a group of a list by pasting emails, this is the easier way to create a new list to send to.
    - Update campaign email and wording where needed
 
+### Importing
+
+Once all the responses have come in and the responses have been edited in the spreadsheet, run the following to import:
+
+1. Export the CSV from the respondent list and save it in `nonprofits/build/` folder (or somehwere that won't get committed to the repo).
+1. `node nonprofits/import.js --responses="nonprofits/build/XXXX.csv"`
+   - Use the `--commit` to commit (this will still ask for confirmation)
+
 ## Publishing
 
 See [docs/publishing.md](./docs/publishing.md).

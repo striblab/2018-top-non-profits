@@ -189,7 +189,6 @@ async function importResponse(r, current) {
     );
   });
   let employees = {
-    ID: null,
     COID: newCompany.COID,
     Added: sqlDate,
     PublishYear: listYear,
@@ -219,7 +218,6 @@ async function importResponse(r, current) {
       return e.COID === newCompany.COID && e.Last === r['Last Name'];
     });
     let officer = {
-      ID: null,
       COID: newCompany.COID,
       First: r['First Name'],
       Last: r['Last Name'],
@@ -249,7 +247,6 @@ async function importResponse(r, current) {
       );
     });
     let salary = {
-      ID: null,
       OfficerID: newOfficer.ID,
       Added: sqlDate,
       PublishYear: listYear,
@@ -276,7 +273,6 @@ async function importResponse(r, current) {
     return e.COID === newCompany.COID && e.PublishYear === listYear;
   });
   let finances = {
-    ID: null,
     COID: newCompany.COID,
     Added: sqlDate,
     PublishYear: listYear,
