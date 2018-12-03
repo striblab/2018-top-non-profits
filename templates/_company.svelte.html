@@ -249,7 +249,7 @@
 
         let ceos = filter(officers, o => {
           let f = find(o.nonprofit_salaries, { publishyear: publishYear });
-          return f && o.title && o.title.match(ceoTitleMatch);
+          return f && ceoTitleMatch(f);
         });
         if (ceos.length > 1) {
           console.error(ceos);

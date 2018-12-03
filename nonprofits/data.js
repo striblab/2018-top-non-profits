@@ -24,8 +24,8 @@ module.exports = {
     source: `${
       process.env.DATA_UI_URI
     }/api/v01/company_details/?nonprofit_finance_publishyear=${
-      config.data ? config.data.publishYear.data : '2017'
-    }&limit=100&username=${process.env.DATA_UI_USERNAME}&api_key=${
+      config.data ? config.data.publishYear.data : '2018'
+    }&limit=1000&username=${process.env.DATA_UI_USERNAME}&api_key=${
       process.env.DATA_UI_API_KEY
     }`,
     type: 'json',
@@ -51,7 +51,7 @@ function parseNonprofits(input) {
     return {};
   }
 
-  let publishYear = 2017; //config.data ? config.data.publishYear.data : 2017;
+  let publishYear = config.data ? config.data.publishYear.data : 2018;
   let validYears = [publishYear, publishYear - 1];
   let parsed = input.objects;
 

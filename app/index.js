@@ -33,7 +33,7 @@ const app = new Content({
   data: {
     nonprofits,
     // Would be nice to be able to pull this in from config.json
-    publishYear: 2017,
+    publishYear: 2018,
     attachShare
   }
 });

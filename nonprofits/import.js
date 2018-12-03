@@ -250,6 +250,7 @@ async function importResponse(r, current) {
       OfficerID: newOfficer.ID,
       Added: sqlDate,
       PublishYear: listYear,
+      CEO: true,
       FiscalYearEnd: inputToSQLDate(r['Date of these data']),
       Salary: parseNumber(r['Salary']),
       Bonus: parseNumber(r['Bonus']),
