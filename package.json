@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.5",
-    "query-string": "^4.3.2"
+    "query-string": "^4.3.2",
+    "svelte-transitions-slide": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.54",

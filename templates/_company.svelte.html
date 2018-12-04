@@ -30,17 +30,30 @@
 
         <span class="nowrap-item">
           { city }
-          {#if www}
-            <span class="spacer"></span>
-          {/if}
+          <span class="spacer"></span>
         </span>
 
         {#if www}
           <span class="nowrap-item">
             <a href="{ linkURL }" target="_blank" rel="noopener">{ linkText }</a>
+            <span class="spacer"></span>
           </span>
         {/if}
+
+        <span class="nowrap-item">
+          <a href="#footnote-{ coid }" on:click="toggleFootnotes(event)">Footnotes <span class="caret { showFootnotes ? 'expanded' : '' }">▼</span></a>
+        </span>
       </div>
+
+      {#if showFootnotes}
+        <p class="footnotes" id="footnote-{ coid }" transition:slide>
+          {@html footnotes ? `Company: ${footnotes} <br>` : '' }
+          Financial:
+            { getValue(nonprofit_finances, 'footnotes', publishYear) ? `${getValue(nonprofit_finances, 'footnotes', publishYear)}` : '' }
+            Data from { getValue(nonprofit_finances, 'source', publishYear) } as of { displayDate(getValue(nonprofit_finances, 'annualreportdate', publishYear)) }.<br>
+          {@html ceo && getValue(ceo.nonprofit_salaries, 'footnotes', publishYear) ? `Executive compensation: ${getValue(ceo.nonprofit_salaries, 'footnotes', publishYear)} <br>` : '' }
+        </p>
+      {/if}
     </div>
   </div>
 
@@ -137,9 +150,9 @@
           </div>
         {/if}
 
-        {#if getValue(ceo.nonprofit_salaries, 'total', publishYear)}
+        {#if getValue(ceo.nonprofit_salaries, 'total', publishYear) && getValue(nonprofit_finances, 'expenses', publishYear)}
           <div class="leadership-data compensation-revenue-ratio">
-            <span>{ Math.round((getValue(ceo.nonprofit_salaries, 'total', publishYear) / getValue(nonprofit_finances, 'expenses', publishYear)) * 100) }%</span> of expenses
+            <span>{ Math.round((getValue(ceo.nonprofit_salaries, 'total', publishYear) / getValue(nonprofit_finances, 'expenses', publishYear)) * 10000) / 100 }%</span> of expenses
           </div>
         {/if}
       </div>
@@ -148,11 +161,25 @@
 </div>
 
 <script>
+  import slide from "svelte-transitions-slide";
   import { kebabCase, isNumber, find, filter } from "lodash";
+  /* global moment */
 
   export default {
     oncreate() {
       console.log(this.get());
+    },
+
+    transitions: { slide },
+
+    methods: {
+      toggleFootnotes(event) {
+        if (event && event.preventDefault) {
+          event.preventDefault();
+        }
+
+        this.set({ showFootnotes: !this.get().showFootnotes });
+      }
     },
 
     helpers: {
@@ -238,6 +265,15 @@
         ])
           .join(" ")
           .replace(/ ,/g, ",");
+      },
+
+      // Dispay a date
+      displayDate(d) {
+        if (!d || typeof moment === "undefined") {
+          return d;
+        }
+
+        return moment(d).format("MMMM DD, YYYY");
       }
     },
 

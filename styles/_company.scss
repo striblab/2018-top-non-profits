@@ -30,6 +30,11 @@
     }
   }
 
+  p.footnotes {
+    font-size: 0.85em;
+    padding-top: 1em;
+  }
+
   .company-heading {
     h3 {
       padding-top: 0;
@@ -74,6 +79,17 @@
       &::after {
         content: "|";
       }
+    }
+  }
+
+  .caret {
+    display: inline-block;
+    font-size: 0.85em;
+    vertical-align: top;
+    transition: transform 0.3s;
+
+    &.expanded {
+      transform: rotate(-90deg);
     }
   }
 
