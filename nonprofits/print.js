@@ -83,24 +83,24 @@ async function main() {
     csv.format(subset)
   );
   console.error(
-    `Wrote output to: ${outputPath.replace('-list-', 'list-all-')}`
+    `Wrote output to: ${outputPath.replace('-list-', '-list-all-')}`
   );
 
   // By category
   fs.writeFileSync(
-    outputPath.replace('-list-', 'list-healthcare-'),
+    outputPath.replace('-list-', '-list-healthcare-'),
     csv.format(_.filter(subset, s => s.category.match(/healthcare/i)))
   );
   fs.writeFileSync(
-    outputPath.replace('-list-', 'list-education-'),
+    outputPath.replace('-list-', '-list-education-'),
     csv.format(_.filter(subset, s => s.category.match(/education/i)))
   );
   fs.writeFileSync(
-    outputPath.replace('-list-', 'list-social-'),
+    outputPath.replace('-list-', '-list-social-'),
     csv.format(_.filter(subset, s => s.category.match(/social/i)))
   );
   fs.writeFileSync(
-    outputPath.replace('-list-', 'list-arts-other-'),
+    outputPath.replace('-list-', '-list-arts-other-'),
     csv.format(_.filter(subset, s => s.category.match(/arts|other/i)))
   );
 }
