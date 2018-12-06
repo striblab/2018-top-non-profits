@@ -279,22 +279,6 @@
     },
 
     computed: {
-      ceo({ officers, publishYear, ceoTitleMatch }) {
-        if (!officers || !officers.length) {
-          return;
-        }
-
-        let ceos = filter(officers, o => {
-          let f = find(o.nonprofit_salaries, { publishyear: publishYear });
-          return f && ceoTitleMatch(f);
-        });
-        if (ceos.length > 1) {
-          console.error(ceos);
-        }
-
-        return ceos ? ceos[0] : undefined;
-      },
-
       linkURL({ www }) {
         return www && www.indexOf("http") === 0 ? www : "http://" + www;
       },

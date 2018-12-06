@@ -98,19 +98,12 @@
         // Sort
         if (ceoSort) {
           copy = sortBy(copy, c => {
-            let ceo = find(c.officers, ceoTitleMatch);
-            if (ceo) {
-              let sal = find(ceo.nonprofit_salaries, {
-                publishyear: publishYear
-              });
-
-              if (sal) {
-                return sal.total || 0;
-              }
-            }
-
-            return 0;
+            return c.ceo && c.ceo.salary ? c.ceo.salary.total : 0;
           }).reverse();
+        } else {
+          copy = sortBy(copy, c => {
+            return c.rank;
+          });
         }
 
         return copy;
@@ -132,13 +125,6 @@
     data() {
       return {
         filter: undefined,
-        ceoTitleMatch: officer => {
-          return (
-            officer.ceo ||
-            (officer.title &&
-              officer.title.match(/(ceo|president|chief\s+execut)/i))
-          );
-        },
         categories: [
           { id: undefined, name: "All" },
           { id: "social-services", name: "Social services" },

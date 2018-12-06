@@ -134,6 +134,22 @@ function parseNonprofits(input) {
     return p;
   });
 
+  // Find top officer
+  parsed = _.map(parsed, p => {
+    p.officers.forEach(o => {
+      let f = _.find(o.nonprofit_salaries, { publishyear: publishYear });
+      if (
+        f &&
+        (f.ceo || (f.title && f.title.match(/(ceo|president|chief\s+execut)/i)))
+      ) {
+        p.ceo = o;
+        p.ceo.salary = f;
+      }
+    });
+
+    return p;
+  });
+
   // Clean up
   parsed = _.map(parsed, p => {
     return pruneEmpty(p);
