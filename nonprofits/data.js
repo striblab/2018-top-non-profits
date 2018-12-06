@@ -54,6 +54,11 @@ function parseNonprofits(input) {
   let publishYear = config.data ? config.data.publishYear.data : 2018;
   let validYears = [publishYear, publishYear - 1];
   let parsed = input.objects;
+  let list2017 = JSON.parse(
+    fs.readFileSync(
+      path.join(__dirname, '../sources/2017-non-profit-list.json')
+    )
+  );
 
   parsed = _.map(parsed, p => {
     delete p.notes;
@@ -134,14 +139,13 @@ function parseNonprofits(input) {
     return pruneEmpty(p);
   });
 
-  // Sort and rank previous year
-  parsed = _.sortBy(parsed, p => {
-    let f = _.find(p.nonprofit_finances, { publishyear: publishYear - 1 });
-    return f ? f.revenue || 0 : 0;
-  }).reverse();
-  parsed = _.map(parsed, (p, pi) => {
-    let f = _.find(p.nonprofit_finances, { publishyear: publishYear - 1 });
-    p.rankPrevious = f && f.revenue ? pi + 1 : undefined;
+  // Rank previous year
+  parsed = _.map(parsed, p => {
+    let previous = _.find(list2017, { coid: p.coid });
+    if (previous) {
+      p.rankPrevious = previous.rank;
+    }
+
     return p;
   });
 
