@@ -49,8 +49,9 @@
         <p class="footnotes" id="footnote-{ coid }" transition:slide>
           {@html footnotes ? `Company: ${footnotes} <br>` : '' }
           Financial:
-            { getValue(nonprofit_finances, 'footnotes', publishYear) ? `${getValue(nonprofit_finances, 'footnotes', publishYear)}` : '' }
-            Data from { getValue(nonprofit_finances, 'source', publishYear) } as of { displayDate(getValue(nonprofit_finances, 'annualreportdate', publishYear)) }.<br>
+            {@html getValue(nonprofit_finances, 'footnotes', publishYear) ? `${getValue(nonprofit_finances, 'footnotes', publishYear)}<br>` : '' }
+          Data from { getValue(nonprofit_finances, 'source', publishYear) } as of { displayDate(getValue(nonprofit_finances, 'annualreportdate', publishYear)) }.
+          <br>
           {@html ceo && getValue(ceo.nonprofit_salaries, 'footnotes', publishYear) ? `Executive compensation: ${getValue(ceo.nonprofit_salaries, 'footnotes', publishYear)} <br>` : '' }
         </p>
       {/if}
