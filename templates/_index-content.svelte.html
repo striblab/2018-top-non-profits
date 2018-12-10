@@ -1,16 +1,16 @@
 
 <div class="strib-styles ssa ssb ssc">
   <div class="hero">
-    <h1>Nonprofit 100</h1>
+    <h1>The Non-Profit 100</h1>
 
-    <p class="lead container-sm">A new title for 2018 list.</p>
+    <p class="lead container-sm">The 23rd annual Star Tribune top non-profits in Minnesota.</p>
 
     <div class="byline">
       <address>By <a rel="author" href="http://startribune.com//patrick-kennedy/10645186/">Patrick Kennedy</a></address>
       <span class="spacer"></span>
       Star Tribune
       <span class="spacer-alt"></span>
-      <time pubdate datetime="2018-12-30T00:00:00">December 12, 2018</time>
+      <time pubdate datetime="2018-12-16T00:00:00">December 16, 2018</time>
     </div>
 
     <div class="share-placeholder">
@@ -64,7 +64,7 @@
 
       <h1>Methodology</h1>
 
-      <p>Certain nonprofits, charities and charitable trusts registered with the state must file IRS Form 990 with the Minnesota attorney general's office each year. Most of the financial information for organizations on our list was taken from their 2016 Form 990s or from consolidated audited financial statements. The Star Tribune's list includes the top officer and that person's total compensation, including salary, bonus and incentive compensation, other reportable compensation, contributions to retirement and other deferred compensation plans, and the value of nontaxable benefits.</p>
+      <p>Certain nonprofits, charities and charitable trusts registered with the state must file IRS Form 990 with the Minnesota attorney general's office each year. Most of the financial information for organizations on our list was taken from their 2017 Form 990s or from consolidated audited financial statements. The Star Tribune's list includes the top officer and that person's total compensation, including salary, bonus and incentive compensation, other reportable compensation, contributions to retirement and other deferred compensation plans, and the value of nontaxable benefits.</p>
     </footer>
   </div>
 </div>
@@ -98,7 +98,7 @@
         // Sort
         if (ceoSort) {
           copy = sortBy(copy, c => {
-            return c.ceo && c.ceo.salary ? c.ceo.salary.total : 0;
+            return c.ceo && c.ceo.salary ? c.ceo.salary.total || 0 : 0;
           }).reverse();
         } else {
           copy = sortBy(copy, c => {
