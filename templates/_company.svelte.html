@@ -62,7 +62,7 @@
     <div class="col col-25 col-md-20 grid-space no-grid-space-md">
       <div class="logo">
         {#if hasLogo}
-          <img src="./assets/logos/{ coid }.png" alt="Company logo for { name }">
+          <img src="//static.startribune.com/news/projects/all/2018-top-non-profits/assets/logos/{ coid }.png" alt="Company logo for { name }">
         {:else}
           {@html '&nbsp;'}
         {/if}
@@ -107,9 +107,9 @@
       <div class="col col-25 col-md-15">
         <div class="ceo-headshot" data-officer-id="{ ceo.id }">
           {#if ceo.hasImage}
-            <img src="./assets/ceos/{ ceo.id }.png" alt="Headshot for { officerName }">
+            <img src="//static.startribune.com/news/projects/all/2018-top-non-profits/assets/ceos/{ ceo.id }.png" alt="Headshot for { officerName(ceo) }">
           {:else}
-            <img src="./assets/images/generic-headshot.jpg" alt="Generic headshot image">
+            <img src="//static.startribune.com/news/projects/all/2018-top-non-profits/assets/images/generic-headshot.jpg" alt="Generic headshot image">
           {/if}
         </div>
       </div>
