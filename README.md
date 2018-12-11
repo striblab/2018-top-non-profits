@@ -50,6 +50,10 @@ Once all the responses have come in and the responses have been edited in the sp
 1. `node nonprofits/import.js --responses="nonprofits/build/XXXX.csv"`
    - Use the `--commit` to commit (this will still ask for confirmation)
 
+### For print
+
+1. Output a CSV for print purposes: `node nonprofits/print.js`
+
 ## Publishing
 
 See [docs/publishing.md](./docs/publishing.md).

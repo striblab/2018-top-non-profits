@@ -72,7 +72,12 @@ async function main() {
           .join(' ')
           .replace(/ ,/g, ',')
         : undefined,
-      compensation: ceo && ceoSalary ? ceoSalary.total : undefined
+      compensation: ceo && ceoSalary ? ceoSalary.total : undefined,
+      financeFootnotes: currentFinances.footnotes,
+      financeDate: currentFinances.fiscalyearend,
+      financeSource: currentFinances.source,
+      ceoSalaryFootnotes: ceoSalary ? ceoSalary.footnotes : undefined,
+      companyFootnotes: n.footnotes
     };
     return s;
   });
