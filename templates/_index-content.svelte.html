@@ -19,30 +19,32 @@
   </div>
 
   <div class="container-lg">
-    <div class="category-filter">
-      <form>
-        <div class="row">
-          <div class="col col-100 col-md-66">
-            <fieldset>
-              <legend>Filter <span class="sr-only">company list</span></legend>
+    {#if isBrowser}
+      <div class="category-filter">
+        <form>
+          <div class="row">
+            <div class="col col-100 col-md-66">
+              <fieldset>
+                <legend>Filter <span class="sr-only">company list</span></legend>
 
-              {#each categories as f}
-                <button type="button" class="category { f.id } { categoryFilter === f.id ? 'active' : '' }" on:click="proxySet(event, { categoryFilter: f.id })">{ f.name }</button>
-              {/each}
-            </fieldset>
-          </div>
-
-          <div class="col col-100 col-md-33">
-            <div class="ceo-sort">
-              {#if (!ceoSort)}
-                <button on:click="proxySet(event, { ceoSort: true })" type="button" class="sort-ceo">Sort by CEO compensation</button>
-              {:else}
-                <button on:click="proxySet(event, { ceoSort: false })" type="button" class="unsort-ceo">Sort by revenue rankings</button>
-              {/if}
+                {#each categories as f}
+                  <button type="button" class="category { f.id } { categoryFilter === f.id ? 'active' : '' }" on:click="proxySet(event, { categoryFilter: f.id })">{ f.name }</button>
+                {/each}
+              </fieldset>
             </div>
-          </div>
-      </form>
-    </div>
+
+            <div class="col col-100 col-md-33">
+              <div class="ceo-sort">
+                {#if (!ceoSort)}
+                  <button on:click="proxySet(event, { ceoSort: true })" type="button" class="sort-ceo">Sort by CEO compensation</button>
+                {:else}
+                  <button on:click="proxySet(event, { ceoSort: false })" type="button" class="unsort-ceo">Sort by revenue rankings</button>
+                {/if}
+              </div>
+            </div>
+        </form>
+      </div>
+    {/if}
 
     <div class="company-list">
       {#each filteredNonProfits as company}
@@ -124,6 +126,7 @@
 
     data() {
       return {
+        isBrowser: typeof window !== "undefined",
         filter: undefined,
         categories: [
           { id: undefined, name: "All" },

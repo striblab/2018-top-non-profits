@@ -40,14 +40,15 @@
           </span>
         {/if}
 
-        <span class="nowrap-item">
-          <a href="#footnote-{ coid }" on:click="toggleFootnotes(event)">Footnotes <span class="caret { showFootnotes ? 'expanded' : '' }">▼</span></a>
-        </span>
+        {#if isBrowser}
+          <span class="nowrap-item">
+            <a href="#footnote-{ coid }" on:click="toggleFootnotes(event)">Footnotes <span class="caret { showFootnotes ? 'expanded' : '' }">▼</span></a>
+          </span>
+        {/if}
       </div>
 
-      {#if showFootnotes}
+      {#if !isBrowser || (isBrowser && showFootnotes)}
         <p class="footnotes" id="footnote-{ coid }" transition:slide>
-          {@html footnotes ? `Company: ${footnotes} <br>` : '' }
           Financial:
             {@html getValue(nonprofit_finances, 'footnotes', publishYear) ? `${getValue(nonprofit_finances, 'footnotes', publishYear)}<br>` : '' }
           Data from { getValue(nonprofit_finances, 'source', publishYear) } as of { displayDate(getValue(nonprofit_finances, 'annualreportdate', publishYear)) }.
@@ -291,6 +292,12 @@
               .replace(/\/$/, "")
           : "";
       }
+    },
+
+    data() {
+      return {
+        isBrowser: typeof window !== "undefined"
+      };
     }
   };
 </script>
