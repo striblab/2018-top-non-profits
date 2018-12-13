@@ -41,12 +41,23 @@ async function main() {
       return ceoSalary;
     });
 
+    function millions(input, decimals = 1) {
+      return (
+        Math.round((input / 1000000) * Math.pow(10, decimals)) /
+        Math.pow(10, decimals)
+      );
+    }
+
     let s = {
       category: n.category,
       rank: n.rank,
       company: n.name,
       revenue: currentFinances.revenue,
+      revenue_m: millions(currentFinances.revenue),
       previousRevenue: pastFinances ? pastFinances.revenue : undefined,
+      previousRevenue_m: pastFinances
+        ? millions(pastFinances.revenue)
+        : undefined,
       revenueChangePercent: pastFinances
         ? Math.round(
           ((currentFinances.revenue - pastFinances.revenue) /
@@ -55,12 +66,14 @@ async function main() {
         ) / 100
         : undefined,
       expenses: currentFinances.expenses,
+      expenses_m: millions(currentFinances.expenses),
       grantsAsPercentOfRevenue: currentFinances.contribgrants
         ? Math.round(
           (currentFinances.contribgrants / currentFinances.revenue) * 10000
         ) / 100
         : undefined,
       excess: currentFinances.excess,
+      excess_m: millions(currentFinances.excess),
       fiscalYearEnd: currentFinances.fiscalyearend,
       topOfficer: ceo
         ? _.filter([
@@ -73,6 +86,8 @@ async function main() {
           .replace(/ ,/g, ',')
         : undefined,
       compensation: ceo && ceoSalary ? ceoSalary.total : undefined,
+      compensation_m:
+        ceo && ceoSalary ? millions(ceoSalary.total, 2) : undefined,
       financeFootnotes: currentFinances.footnotes,
       financeDate: currentFinances.fiscalyearend,
       financeSource: currentFinances.source,
