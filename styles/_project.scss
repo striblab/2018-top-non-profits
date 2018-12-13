@@ -35,6 +35,10 @@ $color-categories: (
   white-space: nowrap;
 }
 
+.summary {
+  margin-bottom: 3em;
+}
+
 // Dealing with (probably hackish) ways to show hide on mobile
 // or desktop
 .desktop-only,

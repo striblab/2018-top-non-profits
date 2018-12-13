@@ -3,6 +3,22 @@
  */
 
 .hero {
+  h1 {
+    font-size: 3.8em;
+
+    @media only screen and (min-width: map-get($breakpoints, "sm")) {
+      font-size: 5em;
+    }
+  }
+
+  .lead {
+    font-size: 1.6em;
+
+    @media only screen and (min-width: map-get($breakpoints, "sm")) {
+      font-size: 2em;
+    }
+  }
+
   .byline {
     time {
       font-weight: normal;
