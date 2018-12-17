@@ -3,9 +3,9 @@
  */
 
 // Bug, where reordering changes rank in ios
-.no-ranking .company p.rank {
-  color: transparent !important;
-}
+// .no-ranking .company p.rank {
+//   color: transparent !important;
+// }
 
 .company {
   @include font-styles("benton-sans");

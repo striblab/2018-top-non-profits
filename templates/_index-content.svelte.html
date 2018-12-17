@@ -19,7 +19,7 @@
   </div>
 
   <div class="container-md">
-    <p class="summary">The Star Tribune's 23rd annual look at Minnesota's nonprofit businesses shows again the sector's economic force. Some of these organizations are big competitors in their fields, with CEOs making high six-figure or seven-figure salaries. Revenue for the 100 largest nonprofits rose 10.5 percent last year to $58.1 billion, with health care and educational organizations making up nearly three-quarters of the list. They also employ 313,407 people, a slight decrease from last year. Long term, the nonprofit sector has grown from 8 percent in 1993 to 12 percent of the state's workforce in 2017, according to the Minnesota Council of Nonprofits.</p>
+    <p class="summary">The Star Tribune's 23rd annual look at Minnesota's nonprofit businesses shows a sector in transition. The list is dominated by large nonprofit health care organizations but <a href="http://www.startribune.com/health-plan-competition-heats-up-as-nonprofit-insurers-take-on-for-profit-giants-in-minnesota/502800702/">a 2017 law is bringing competition from for-profit insurers</a> and new <a href="http://www.startribune.com/new-tax-on-nonprofit-salaries-means-less-money-going-the-mission/502801512/">federal tax laws on million dollar nonprofit pay packages</a> may mean less money for missions.  Big health care and education organizations make up nearly three-quarters of the list. But small social service groups like <a href="http://www.startribune.com/banyan-s-6-4-million-community-center-helps-bridge-gap-for-low-income-kids-in-south-minneapolis/502777292/">Banyan Community</a> can still make an outside impact.</p>
   </div>
 
   <div class="container-lg">
@@ -50,9 +50,8 @@
       </div>
     {/if}
 
-    <!-- Very weird issue where ranking gets updates when sorting -->
-    <div class="company-list { isIos && filteredOrSorted ? 'no-ranking' : '' }">
-      {#each filteredNonProfits as company}
+    <div class="company-list">
+      {#each filteredNonProfits as company (company.coid)}
         <Company
           {...company}
           publishYear="{ publishYear }"
@@ -128,7 +127,6 @@
 
       filteredOrSorted({ categoryFilter, ceoSort }) {
         if (categoryFilter || ceoSort) {
-          console.log(true);
           return true;
         }
       }
