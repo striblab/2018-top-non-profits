@@ -34,7 +34,8 @@ const app = new Content({
     nonprofits,
     // Would be nice to be able to pull this in from config.json
     publishYear: 2018,
-    attachShare
+    attachShare,
+    isIos: utils.isIOS()
   }
 });
 window.__app = app;

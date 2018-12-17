@@ -2,6 +2,10 @@
  * Each company styles
  */
 
+.no-ranking .company p.rank {
+  color: transparent;
+}
+
 .company {
   @include font-styles("benton-sans");
 

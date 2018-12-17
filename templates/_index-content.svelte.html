@@ -50,7 +50,8 @@
       </div>
     {/if}
 
-    <div class="company-list">
+    <!-- Very weird issue where ranking gets updates when sorting -->
+    <div class="company-list { isIos && filteredOrSorted ? 'no-ranking' : '' }">
       {#each filteredNonProfits as company}
         <Company
           {...company}
@@ -71,6 +72,10 @@
       <h1>Methodology</h1>
 
       <p>Certain nonprofits, charities and charitable trusts registered with the state must file IRS Form 990 with the Minnesota attorney general's office each year. Most of the financial information for organizations on our list was taken from their 2017 Form 990s or from consolidated audited financial statements. The Star Tribune's list includes the top officer and that person's total compensation, including salary, bonus and incentive compensation, other reportable compensation, contributions to retirement and other deferred compensation plans, and the value of nontaxable benefits.</p>
+
+      <h1>Updates</h1>
+
+      <p>An earlier version of this piece had an issue on iPhones/iPads where the ranking would be altered when the list was sorted.</p>
     </footer>
   </div>
 </div>
@@ -119,6 +124,13 @@
         }
 
         return copy;
+      },
+
+      filteredOrSorted({ categoryFilter, ceoSort }) {
+        if (categoryFilter || ceoSort) {
+          console.log(true);
+          return true;
+        }
       }
     },
 
