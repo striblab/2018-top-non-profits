@@ -2,6 +2,7 @@
  * Each company styles
  */
 
+// Bug, where reordering changes rank in ios
 .no-ranking .company p.rank {
   color: transparent !important;
 }
