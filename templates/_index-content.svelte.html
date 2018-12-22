@@ -55,7 +55,6 @@
         <Company
           {...company}
           publishYear="{ publishYear }"
-          ceoTitleMatch="{ ceoTitleMatch }"
         />
       {/each}
     </div>
@@ -95,14 +94,8 @@
     },
 
     computed: {
-      filteredNonProfits({
-        nonprofits,
-        categoryFilter,
-        ceoSort,
-        publishYear,
-        ceoTitleMatch
-      }) {
-        let copy = cloneDeep(nonprofits);
+      filteredNonProfits({ nonprofits, categoryFilter, ceoSort, publishYear }) {
+        let copy = nonprofits.map(cloneDeep);
 
         // Filter
         if (categoryFilter) {
